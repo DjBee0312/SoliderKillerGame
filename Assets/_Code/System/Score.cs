@@ -11,7 +11,7 @@ namespace _Code.System {
 
         private int _score = 0;
         private void Start() {
-            increaseScore += IncreaseScore();
+            increaseScore += IncreaseScore;
         }
 
         private void IncreaseScore(int score) {

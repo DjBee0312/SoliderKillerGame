@@ -13,6 +13,9 @@ namespace _Code.Enemies {
 
         [SerializeField]
         private int rewardForKilling = 5;
+
+        [SerializeField]
+        private Rigidbody _rigidbody = null;
         [SerializeField]
         private MeshRenderer _meshRenderer;
         
@@ -29,7 +32,14 @@ namespace _Code.Enemies {
         private void KillThisEnemy() {
             Score.increaseScore?.Invoke(rewardForKilling);
             gameObject.SetActive(false);
+            Pool.Pool.Instance.ReturnEnemy(this);
             Debug.Log("ENEMY KILLED!");
+        }
+
+        public void ClearRigidbody() {
+            _rigidbody.interpolation = 0f;
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.ResetInertiaTensor();
         }
     }
 }

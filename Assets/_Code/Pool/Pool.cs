@@ -7,8 +7,7 @@ using UnityEngine;
 namespace _Code.Pool {
     
     public class EnemyType {
-        public List<Enemy> Enemies = new List<Enemy>();
-        public EColor EColor = default;
+        public List<Enemy> pooledEnemies = new List<Enemy>();
     }
     
     
@@ -57,16 +56,45 @@ namespace _Code.Pool {
     public class Pool : MonoBehaviour
     {
         public static Pool Instance { get; private set; }
-        
         [SerializeField]
-        private List<Enemy> poolEnemies = new List<Enemy>();
+        private Enemy enemy = null;
         [SerializeField]
-        private int particleCount = 700;
+        private List<EnemyType> poolEnemies = new List<EnemyType>();
+        [SerializeField]
+        private int enemyCount = 70;
         
         private void Awake()
         {
             Instance = this;
-
+            CreateEnemyPool(enemy, enemyCount);
+        }
+        
+        private void CreateEnemyPool(Enemy enemy, int poolSize) {
+            EnemyType enemyType = new EnemyType();
+            enemy.SpawnAndStore(enemyType.pooledEnemies, poolSize, transform);
+            poolEnemies.Add(enemyType);
+        }
+        
+        public Enemy GetEnemy(Vector3 _position, Transform _parrent, EColor eColor) {
+            foreach (EnemyType enemyType in poolEnemies) {
+                Enemy enemy = (Enemy)enemyType.pooledEnemies.GetFromStore(_parrent, _position, transform);
+                enemy.gameObject.SetActive(true);
+                enemy.ClearRigidbody();
+                enemy.color = eColor;
+                enemy.SetColor(eColor);
+                return enemy;
+            }
+            return null;
+        }
+        
+        public void ReturnEnemy(Enemy enemy)
+        {
+            foreach (EnemyType enemyType in poolEnemies)
+            {
+                enemy.gameObject.SetActive(false);
+                enemy.ReturnToStore(enemyType.pooledEnemies,transform);
+                break;
+            }
         }
     }
 }

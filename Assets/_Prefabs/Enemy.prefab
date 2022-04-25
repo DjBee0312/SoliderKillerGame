@@ -112,6 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 1
+  rewardForKilling: 5
+  _rigidbody: {fileID: 1863119645145125187}
   _meshRenderer: {fileID: 5251064846067474614}
 --- !u!54 &1863119645145125187
 Rigidbody:

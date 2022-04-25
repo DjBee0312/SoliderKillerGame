@@ -38,11 +38,12 @@ namespace _Code.Enemies {
         }
 
         private void SpawnEnemy(Vector3 spawnPos) {
-            GameObject newEnemyGameObject = Instantiate(enemyToSpawn.gameObject, spawnPos, Quaternion.identity);
-            newEnemyGameObject.TryGetComponent(out Enemy newEnemy);
+            // GameObject newEnemyGameObject = Instantiate(enemyToSpawn.gameObject, spawnPos, Quaternion.identity);
+            // newEnemyGameObject.TryGetComponent(out Enemy newEnemy);
             EColor randColor = (EColor) Random.Range(0, 3);
-            newEnemy.color = randColor;
-            newEnemy.SetColor(randColor);
+            Pool.Pool.Instance.GetEnemy(spawnPos, null, randColor);
+            // newEnemy.color = randColor;
+            // newEnemy.SetColor(randColor);
         }
         
     }
