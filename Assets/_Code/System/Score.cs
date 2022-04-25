@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Score : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace _Code.System {
+    public class Score : MonoBehaviour {
+        public static Action<int> increaseScore;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField]
+        private Text scoreText = null;
+
+        private int _score = 0;
+        private void Start() {
+            increaseScore += IncreaseScore();
+        }
+
+        private void IncreaseScore(int score) {
+            _score += score;
+            scoreText.text = $"Score:{_score.ToString()}";
+        }
     }
 }
