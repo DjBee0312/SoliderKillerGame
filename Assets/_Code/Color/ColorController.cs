@@ -1,24 +1,21 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Code.Color {
-    public class ColorController : MonoBehaviour {
-        public static ColorController Instance;
-        [SerializeField]
-        private ColorSystem _colorSystem = null;
+public class ColorController : MonoBehaviour {
+   public static ColorController Instance;
 
-        private void Awake() {
-            Instance = this;
-        }
+   [SerializeField]
+   private ColorSystem _colorSystem = null;
 
-        public UnityEngine.Color ReturnColor(EColor eColor) {
-            foreach (ColorData colorData in _colorSystem.ColorDatas) {
-                if (colorData.ColorName == eColor) {
-                    return colorData.Color;
-                }
-            }
-            return UnityEngine.Color.black;
-        }
-    }
+   private void Awake() { Instance = this; }
+
+   public Color ReturnColor(EColor eColor) {
+      foreach (ColorData colorData in _colorSystem.ColorDatas) {
+         if (colorData.ColorName == eColor) {
+            return colorData.Color;
+         }
+      }
+
+      return Color.black;
+   }
 }
